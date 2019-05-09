@@ -1,10 +1,24 @@
 public class ChocolateBoiler {
+    private static ChocolateBoiler instance;
     private boolean empty;
     private boolean boiled;
-
     public ChocolateBoiler() {
         empty = true;
         boiled = false;
+    }
+    private static Object mutex = new Object();
+
+    public static ChocolateBoiler getInstance(){
+        synchronized (mutex) {
+            if (instance == null) {
+                instance = new ChocolateBoiler();
+                System.out.println("Creé una instancia");
+            }
+        }
+        if(instance != null){
+            System.out.println("Ya existe una instancia");
+        }
+        return instance;
     }
 
     public void fill(){
@@ -36,3 +50,5 @@ public class ChocolateBoiler {
         return boiled;
     }
 }
+
+
